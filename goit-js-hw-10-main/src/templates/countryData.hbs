@@ -1,0 +1,12 @@
+<div>
+  <img src='{{flags.svg}}' alt='{{name.official}}' />
+  <h2 class='header'>{{name.official}}</h2>
+</div>
+<ul>
+  <li class='country-info'>Capital: {{capital}}</li>
+  <li class='country-info'>Population: {{population}}</li>
+  <li class='country-info'>Languages:
+    {{#each languages}}
+      {{this}},
+    {{/each}}</li>
+</ul>
