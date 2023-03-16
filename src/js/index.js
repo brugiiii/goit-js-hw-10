@@ -1,4 +1,3 @@
-
 import FetchApiService from './fetchCountries';
 import debounce from 'lodash.debounce';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
@@ -12,18 +11,19 @@ const refs = {
   containerEl: document.querySelector('.country-info'),
   listOfCountriesEl: document.querySelector('.country-list'),
 };
+Notify.init({ position: 'center-top' });
 
 refs.inputEl.addEventListener('input', debounce(onInput, DEBOUNCE_DELAY));
 
 function onInput(e) {
-  const country = e.target.value;
+  const country = e.target.value.trim();
 
   if (!country) {
     resetOutput();
     return;
   }
 
-  fetchApiService.country = country.trim();
+  fetchApiService.country = country;
   fetchApiService.fetchCountries().then(onSuccess).catch(onError);
 }
 
