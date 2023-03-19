@@ -1,6 +1,6 @@
 import FetchApiService from './fetchCountries';
 import debounce from 'lodash.debounce';
-import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import Notiflix from 'notiflix';
 import listOfCountries from '../templates/listOfCountries.hbs';
 import countryData from '../templates/countryData.hbs';
 
@@ -11,7 +11,7 @@ const refs = {
   containerEl: document.querySelector('.country-info'),
   listOfCountriesEl: document.querySelector('.country-list'),
 };
-Notify.init({ position: 'center-top' });
+Notiflix.Notify.init({ position: 'center-top' });
 
 refs.inputEl.addEventListener('input', debounce(onInput, DEBOUNCE_DELAY));
 
@@ -33,7 +33,9 @@ function onSuccess(res) {
   if (res.status === 404) {
     throw new Error();
   } else if (res.length > 10) {
-    Notify.info('Too many matches found. Please enter a more specific name.');
+    Notiflix.Notify.info(
+      'Too many matches found. Please enter a more specific name.'
+    );
   } else if (res.length >= 2 && res.length < 10) {
     refs.listOfCountriesEl.innerHTML = listOfCountries(res);
   } else {
@@ -43,7 +45,7 @@ function onSuccess(res) {
 
 function onError() {
   resetOutput();
-  Notify.failure('Oops, there is no country with that name');
+  Notiflix.Notify.failure('Oops, there is no country with that name');
 }
 
 function resetOutput() {
